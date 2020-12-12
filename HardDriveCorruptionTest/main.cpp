@@ -10,9 +10,11 @@ int RandomNumber(int min, int max) {
 
 int main(int argc, char* argv[]) {
 	if (argc <= 1) {
-		std::cerr << "Usage: HardDriveCorruptionTest.exe <SizeInBytes>" << std::endl;
+		std::cerr << "Usage: HardDriveCorruptionTest.exe <SizeInBytes> [Verbose]" << std::endl;
 		return 1;
 	}
+
+	bool verbose = argc >= 3; // Has 2 arguments
 
 	try {
 		size_t fileSize = std::stoull(argv[1]);
@@ -39,7 +41,9 @@ int main(int argc, char* argv[]) {
 				file.write(buffer, nextSize);
 
 				delete[] buffer;
-				std::cout << "Buffer with size of " << nextSize << " written" << std::endl;
+				if (verbose) {
+					std::cout << "Buffer with size of " << nextSize << " written" << std::endl;
+				}
 				bytesWritten += nextSize;
 			}
 
@@ -70,7 +74,9 @@ int main(int argc, char* argv[]) {
 				}
 
 				delete[] readBuffer;
-				std::cout << "Buffer with size of " << nextSize << " read" << std::endl;
+				if (verbose) {
+					std::cout << "Buffer with size of " << nextSize << " read" << std::endl;
+				}
 				bytesRead += nextSize;
 			}
 
